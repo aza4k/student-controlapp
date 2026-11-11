@@ -1,0 +1,31 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+venv/
+.venv/
+env/
+backend/db.sqlite3
+backend/db.sqlite3-journal
+*.log
+
+# Node / Frontend
+node_modules/
+web/node_modules/
+web/dist/
+.vite/
+
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+
+# Local & Scratch files
+mobile/
+idea.txt
+run_backend.bat
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
