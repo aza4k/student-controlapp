@@ -72,7 +72,7 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
       }
     }).catch(() => {});
 
-    logAction('LAB_OPENED', 'System', 'Talaba tarmoq laboratoriyasini ochdi');
+    logAction('LAB_OPENED', 'System', 'Tarmoq laboratoriyasi ochildi');
 
     return () => clearInterval(timer);
   }, [submissionId]);
@@ -146,7 +146,7 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
     };
 
     setDevices((prev) => [...prev, newDevice]);
-    logAction('DEVICE_CREATED', name, `${name} (${type}) topologiyaga qo'shildi`);
+    logAction('DEVICE_CREATED', name, `${name} (${type}) topologiyaga qo‘shildi`);
   };
 
   const deleteDevice = (device) => {
@@ -154,7 +154,7 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
     setDevices((prev) => prev.filter((d) => d.id !== device.id));
     if (selectedDeviceForConnect?.id === device.id) setSelectedDeviceForConnect(null);
     if (activeConfigDevice?.id === device.id) setActiveConfigDevice(null);
-    logAction('DEVICE_DELETED', device.name, `${device.name} topologiyadan o'chirildi`);
+    logAction('DEVICE_DELETED', device.name, `${device.name} topologiyadan o‘chirildi`);
   };
 
   const handleDeviceClick = (device) => {
@@ -201,8 +201,8 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
   const handleMouseMove = (e) => {
     if (!draggingId || !canvasRef.current) return;
     const rect = canvasRef.current.getBoundingClientRect();
-    const newX = Math.max(20, Math.min(rect.width - 90, e.clientX - rect.left - dragOffset.x));
-    const newY = Math.max(20, Math.min(rect.height - 90, e.clientY - rect.top - dragOffset.y));
+    const newX = Math.max(20, Math.min(rect.width - 100, e.clientX - rect.left - dragOffset.x));
+    const newY = Math.max(20, Math.min(rect.height - 100, e.clientY - rect.top - dragOffset.y));
 
     setDevices((prev) =>
       prev.map((d) => (d.id === draggingId ? { ...d, x: newX, y: newY } : d))
@@ -280,7 +280,7 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
       };
 
       const res = await api.submitAssignment(submissionId, finalState, elapsedSeconds);
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
       onComplete(res.id);
     } catch (err) {
       setBannerError(err.message);
@@ -298,64 +298,64 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
   const hostDevices = devices.filter((d) => d.type === 'PC' || d.type === 'Server');
 
   return (
-    <div className="h-screen flex flex-col bg-[#080d1e] overflow-hidden text-slate-100">
-      <div className="glass-nav px-6 py-3 flex items-center justify-between border-b border-white/10 z-20">
+    <div className="h-screen flex flex-col bg-[#EEF2F8] overflow-hidden text-[#0F172A]">
+      <header className="bg-white px-6 py-3.5 flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 shrink-0">
         <div className="flex items-center gap-4">
           <button
             onClick={onBack}
-            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-colors cursor-pointer"
+            className="w-9 h-9 rounded-xl bg-[#F8FAFC] hover:bg-[#EEF2F8] text-slate-600 border border-slate-200 flex items-center justify-center transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div>
-            <h2 className="text-sm font-bold text-white flex items-center gap-2">
-              <span>{assignment.title}</span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/30">
+            <div className="flex items-center gap-2.5">
+              <h2 className="text-sm font-extrabold text-[#0F172A]">{assignment.title}</h2>
+              <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-indigo-50 text-[#545AE8]">
                 Network Lab
               </span>
-            </h2>
-            <div className="text-xs text-slate-400 flex items-center gap-2">
-              <Clock className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Vaqt: {formatTime(elapsedSeconds)}</span>
+            </div>
+            <div className="text-xs text-slate-500 flex items-center gap-2 mt-0.5">
+              <Clock className="w-3.5 h-3.5 text-[#545AE8]" />
+              <span>{formatTime(elapsedSeconds)}</span>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 bg-white/5 p-1 rounded-xl border border-white/10">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-1 bg-[#F8FAFC] p-1 rounded-xl border border-slate-200">
             <button
               onClick={() => addDevice('PC')}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-white/10 text-slate-200 flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-white text-slate-700 flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              <Monitor className="w-3.5 h-3.5 text-blue-400" />
+              <Monitor className="w-3.5 h-3.5 text-[#545AE8]" />
               <span>+ PC</span>
             </button>
             <button
               onClick={() => addDevice('Switch')}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-white/10 text-slate-200 flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-white text-slate-700 flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              <HardDrive className="w-3.5 h-3.5 text-cyan-400" />
+              <HardDrive className="w-3.5 h-3.5 text-amber-600" />
               <span>+ Switch</span>
             </button>
             <button
               onClick={() => addDevice('Router')}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-white/10 text-slate-200 flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-white text-slate-700 flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              <Router className="w-3.5 h-3.5 text-teal-400" />
+              <Router className="w-3.5 h-3.5 text-emerald-600" />
               <span>+ Router</span>
             </button>
             <button
               onClick={() => addDevice('Server')}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-white/10 text-slate-200 flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-white text-slate-700 flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              <Server className="w-3.5 h-3.5 text-purple-400" />
+              <Server className="w-3.5 h-3.5 text-purple-600" />
               <span>+ Server</span>
             </button>
           </div>
 
           <button
             onClick={runPingTest}
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow-lg shadow-cyan-500/20 cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-[#10B981] hover:bg-[#059669] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm cursor-pointer transition-colors"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span>Ping Test</span>
@@ -364,18 +364,18 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
           <button
             onClick={() => setShowConfirmModal(true)}
             disabled={isSubmitting}
-            className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-600/20 cursor-pointer disabled:opacity-50"
+            className="px-4 py-2 rounded-xl bg-[#545AE8] hover:bg-[#4349D6] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm cursor-pointer disabled:opacity-50 transition-colors"
           >
             <CheckCircle2 className="w-4 h-4" />
             <span>Topshirish</span>
           </button>
         </div>
-      </div>
+      </header>
 
       {bannerError && (
-        <div className="bg-rose-500/20 border-b border-rose-500/30 px-6 py-2 text-xs text-rose-200 flex items-center justify-between">
+        <div className="bg-rose-50 border-b border-rose-200 px-6 py-2 text-xs text-rose-700 flex items-center justify-between font-medium">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-rose-400" />
+            <AlertTriangle className="w-4 h-4 text-rose-500" />
             <span>{bannerError}</span>
           </div>
           <button onClick={() => setBannerError('')} className="cursor-pointer">
@@ -384,17 +384,17 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
         </div>
       )}
 
-      <div className="flex-1 flex flex-col md:flex-row overflow-hidden relative">
+      <div className="flex-1 p-4 flex flex-col md:flex-row gap-4 overflow-hidden">
         <div
           ref={canvasRef}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
-          className="flex-1 relative bg-[#090e24] overflow-hidden select-none"
+          className="flex-1 relative bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden select-none"
         >
           <div
-            className="absolute inset-0 opacity-20"
+            className="absolute inset-0"
             style={{
-              backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px)',
+              backgroundImage: 'radial-gradient(circle, #CBD5E1 1px, transparent 1px)',
               backgroundSize: '24px 24px',
             }}
           />
@@ -405,10 +405,10 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
               const d2 = devices.find((d) => d.id === link.to);
               if (!d1 || !d2) return null;
 
-              const x1 = d1.x + 40;
-              const y1 = d1.y + 35;
-              const x2 = d2.x + 40;
-              const y2 = d2.y + 35;
+              const x1 = d1.x + 48;
+              const y1 = d1.y + 42;
+              const x2 = d2.x + 48;
+              const y2 = d2.y + 42;
 
               return (
                 <g key={idx}>
@@ -417,13 +417,13 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
                     y1={y1}
                     x2={x2}
                     y2={y2}
-                    stroke="#06b6d4"
+                    stroke="#545AE8"
                     strokeWidth="2.5"
-                    strokeDasharray="4 2"
-                    strokeOpacity="0.85"
+                    strokeDasharray="5 3"
+                    strokeOpacity="0.75"
                   />
-                  <circle cx={x1} cy={y1} r="4" fill="#10b981" />
-                  <circle cx={x2} cy={y2} r="4" fill="#10b981" />
+                  <circle cx={x1} cy={y1} r="4" fill="#10B981" />
+                  <circle cx={x2} cy={y2} r="4" fill="#10B981" />
                 </g>
               );
             })}
@@ -432,16 +432,16 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
           {devices.map((device) => {
             const isSelected = selectedDeviceForConnect?.id === device.id;
             let IconComponent = Monitor;
-            let iconColor = 'text-blue-400';
+            let iconBg = 'bg-indigo-50 text-[#545AE8]';
             if (device.type === 'Switch') {
               IconComponent = HardDrive;
-              iconColor = 'text-cyan-400';
+              iconBg = 'bg-amber-50 text-amber-600';
             } else if (device.type === 'Router') {
               IconComponent = Router;
-              iconColor = 'text-teal-400';
+              iconBg = 'bg-emerald-50 text-emerald-600';
             } else if (device.type === 'Server') {
               IconComponent = Server;
-              iconColor = 'text-purple-400';
+              iconBg = 'bg-purple-50 text-purple-600';
             }
 
             return (
@@ -450,32 +450,32 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
                 onMouseDown={(e) => handleMouseDown(e, device)}
                 onClick={() => handleDeviceClick(device)}
                 style={{ left: device.x, top: device.y }}
-                className={`absolute w-24 p-2.5 rounded-2xl glass-card flex flex-col items-center cursor-move transition-all z-10 ${
+                className={`absolute w-24 p-2.5 rounded-2xl bg-white border shadow-md flex flex-col items-center cursor-move transition-all z-10 ${
                   isSelected
-                    ? 'ring-2 ring-cyan-400 bg-cyan-500/20 shadow-lg shadow-cyan-500/30'
-                    : 'hover:border-cyan-500/50'
+                    ? 'border-[#545AE8] ring-2 ring-[#545AE8]/30'
+                    : 'border-slate-200 hover:border-[#545AE8]/50'
                 }`}
               >
-                <div className="p-2 rounded-xl bg-white/5 mb-1.5">
-                  <IconComponent className={`w-6 h-6 ${iconColor}`} />
+                <div className={`p-2 rounded-xl mb-1.5 ${iconBg}`}>
+                  <IconComponent className="w-5 h-5" />
                 </div>
-                <span className="font-bold text-xs text-white tracking-tight">{device.name}</span>
+                <span className="font-bold text-xs text-[#0F172A] tracking-tight">{device.name}</span>
                 {device.ip ? (
-                  <span className="text-[10px] font-mono text-emerald-400 mt-0.5">{device.ip}</span>
+                  <span className="text-[10px] font-mono text-emerald-600 font-semibold mt-0.5">{device.ip}</span>
                 ) : (
                   device.type !== 'Switch' && (
-                    <span className="text-[9px] text-rose-400 font-mono mt-0.5">IP yo‘q</span>
+                    <span className="text-[10px] text-rose-500 font-mono mt-0.5">IP yo‘q</span>
                   )
                 )}
 
-                <div className="mt-1 flex items-center gap-1 opacity-80 hover:opacity-100">
+                <div className="mt-1.5 flex items-center gap-1">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       setActiveConfigDevice(device);
                     }}
                     title="IP Konfiguratsiya"
-                    className="p-1 rounded bg-white/10 hover:bg-white/20 text-slate-300 cursor-pointer"
+                    className="p-1 rounded-lg bg-[#F8FAFC] hover:bg-[#EEF2F8] text-slate-600 border border-slate-200 cursor-pointer"
                   >
                     <Settings2 className="w-3 h-3" />
                   </button>
@@ -484,10 +484,10 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
                       onClick={(e) => {
                         e.stopPropagation();
                         setActiveTerminalDevice(device);
-                        setCliHistory(`${device.name} CLI v2.4 (Cisco IOS)\nType "help" for commands.\n\n${device.name}> `);
+                        setCliHistory(`${device.name} CLI v2.4 (Cisco IOS)\nBuyruqlar ro‘yxati uchun "help" yozing.\n\n${device.name}> `);
                       }}
                       title="Terminal (CLI)"
-                      className="p-1 rounded bg-white/10 hover:bg-white/20 text-cyan-300 cursor-pointer"
+                      className="p-1 rounded-lg bg-[#F8FAFC] hover:bg-[#EEF2F8] text-[#545AE8] border border-slate-200 cursor-pointer"
                     >
                       <Terminal className="w-3 h-3" />
                     </button>
@@ -498,7 +498,7 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
                       deleteDevice(device);
                     }}
                     title="O'chirish"
-                    className="p-1 rounded bg-white/10 hover:bg-rose-500/20 text-rose-300 cursor-pointer"
+                    className="p-1 rounded-lg bg-[#F8FAFC] hover:bg-rose-50 text-rose-500 border border-slate-200 cursor-pointer"
                   >
                     <Trash2 className="w-3 h-3" />
                   </button>
@@ -507,42 +507,37 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
             );
           })}
 
-          <div className="absolute bottom-4 left-4 z-10 glass-panel px-4 py-2 rounded-xl text-xs text-slate-300 border border-white/10 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span>
-              <strong>Qo‘llanma:</strong> Qurilmani bosing va ikkinchisini tanlang (Kabel ulash) | Sozlama tugmasi: IP kiritish
-            </span>
+          <div className="absolute bottom-4 left-4 z-10 bg-white/95 backdrop-blur-xs px-4 py-2 rounded-xl text-xs text-slate-600 border border-slate-200 shadow-sm">
+            <strong className="text-[#0F172A]">Qo‘llanma:</strong> Qurilmani ketma-ket bosib kabel ulang | Surish: joyini o‘zgartirish | Tishli g‘ildirak: IP sozlash
           </div>
         </div>
 
-        <div className="w-full md:w-80 border-t md:border-t-0 md:border-l border-white/10 bg-[#060a17]/80 backdrop-blur-xl flex flex-col z-10">
-          <div className="p-3.5 border-b border-white/10 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-xs font-bold text-slate-200">
-              <Activity className="w-4 h-4 text-cyan-400" />
-              <span>Activity Log (Harakatlar Jurnali)</span>
+        <div className="w-full md:w-80 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col shrink-0 overflow-hidden">
+          <div className="px-4 py-3 bg-[#F8FAFC] border-b border-slate-200 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-xs font-bold text-[#0F172A]">
+              <Activity className="w-4 h-4 text-[#545AE8]" />
+              <span>Harakatlar Jurnali</span>
             </div>
-            <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/30">
-              LIVE
-            </span>
+            <span className="text-[11px] font-semibold text-slate-400">{logs.length} ta yozuv</span>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-3 space-y-2">
+          <div className="flex-1 overflow-y-auto p-3 space-y-2 custom-scrollbar">
             {logs.length === 0 ? (
-              <div className="text-center text-xs text-slate-500 py-8">Harakatlar kutilmoqda...</div>
+              <div className="text-center text-xs text-slate-400 py-8">Harakatlar kutilmoqda...</div>
             ) : (
               logs.map((log) => (
                 <div
                   key={log.id}
                   className={`p-2.5 rounded-xl border text-xs transition-all ${
                     log.isError
-                      ? 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+                      ? 'bg-rose-50 border-rose-200 text-rose-700'
                       : log.isResolved
-                      ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
-                      : 'bg-white/5 border-white/5 text-slate-300'
+                      ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                      : 'bg-[#F8FAFC] border-slate-100 text-slate-600'
                   }`}
                 >
                   <div className="flex items-center justify-between text-[10px] text-slate-400 mb-1 font-mono">
-                    <span className="font-bold text-cyan-400">{log.device}</span>
+                    <span className="font-bold text-[#545AE8]">{log.device}</span>
                     <span>{formatTime(log.seconds)}</span>
                   </div>
                   <div className="font-medium leading-relaxed">{log.details}</div>
@@ -554,16 +549,16 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
       </div>
 
       {activeConfigDevice && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="glass-panel w-full max-w-sm rounded-3xl p-6 border border-white/10 shadow-2xl">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-white text-base flex items-center gap-2">
-                <Settings2 className="w-4 h-4 text-cyan-400" />
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-sm rounded-3xl p-6 border border-slate-200 shadow-xl">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+              <h3 className="font-extrabold text-[#0F172A] text-base flex items-center gap-2">
+                <Settings2 className="w-4 h-4 text-[#545AE8]" />
                 <span>{activeConfigDevice.name} IP Sozlamalari</span>
               </h3>
               <button
                 onClick={() => setActiveConfigDevice(null)}
-                className="p-1 rounded-lg hover:bg-white/10 text-slate-400 cursor-pointer"
+                className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -600,32 +595,32 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
               className="space-y-3"
             >
               <div>
-                <label className="block text-xs text-slate-300 mb-1">IP Address</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">IP Address</label>
                 <input
                   name="ip"
                   defaultValue={activeConfigDevice.ip}
                   placeholder="192.168.1.20"
-                  className="w-full glass-input rounded-xl px-3 py-2 text-xs font-mono"
+                  className="w-full bg-[#F8FAFC] border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono text-[#0F172A] focus:outline-none focus:border-[#545AE8]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs text-slate-300 mb-1">Subnet Mask</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Subnet Mask</label>
                 <input
                   name="subnet"
                   defaultValue={activeConfigDevice.subnet || '255.255.255.0'}
                   placeholder="255.255.255.0"
-                  className="w-full glass-input rounded-xl px-3 py-2 text-xs font-mono"
+                  className="w-full bg-[#F8FAFC] border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono text-[#0F172A] focus:outline-none focus:border-[#545AE8]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs text-slate-300 mb-1">Default Gateway</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Default Gateway</label>
                 <input
                   name="gateway"
                   defaultValue={activeConfigDevice.gateway || '192.168.1.1'}
                   placeholder="192.168.1.1"
-                  className="w-full glass-input rounded-xl px-3 py-2 text-xs font-mono"
+                  className="w-full bg-[#F8FAFC] border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono text-[#0F172A] focus:outline-none focus:border-[#545AE8]"
                 />
               </div>
 
@@ -633,13 +628,13 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
                 <button
                   type="button"
                   onClick={() => setActiveConfigDevice(null)}
-                  className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-slate-300 cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-600 cursor-pointer"
                 >
                   Bekor qilish
                 </button>
                 <button
                   type="submit"
-                  className="glass-btn-primary px-4 py-2 rounded-xl text-xs font-bold text-white cursor-pointer"
+                  className="bg-[#545AE8] hover:bg-[#4349D6] px-5 py-2 rounded-xl text-xs font-bold text-white cursor-pointer"
                 >
                   Saqlash
                 </button>
@@ -650,16 +645,16 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
       )}
 
       {showPingModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="glass-panel w-full max-w-lg rounded-3xl p-6 border border-white/10 shadow-2xl">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-white text-base flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-cyan-400" />
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-lg rounded-3xl p-6 border border-slate-200 shadow-xl">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+              <h3 className="font-extrabold text-[#0F172A] text-base flex items-center gap-2">
+                <Terminal className="w-4 h-4 text-[#545AE8]" />
                 <span>Ping Connectivity Tester</span>
               </h3>
               <button
                 onClick={() => setShowPingModal(false)}
-                className="p-1 rounded-lg hover:bg-white/10 text-slate-400 cursor-pointer"
+                className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -667,11 +662,11 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
 
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div>
-                <label className="block text-[10px] text-slate-400 uppercase font-bold mb-1">Manba (Source)</label>
+                <label className="block text-[11px] text-slate-500 font-bold mb-1">Manba (Source)</label>
                 <select
                   value={pingSourceId}
                   onChange={(e) => setPingSourceId(e.target.value)}
-                  className="w-full bg-[#020617] border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                  className="w-full bg-[#F8FAFC] border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:border-[#545AE8]"
                 >
                   {hostDevices.map((d) => (
                     <option key={d.id} value={d.id}>{d.name} ({d.ip || 'IP yoq'})</option>
@@ -679,11 +674,11 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
                 </select>
               </div>
               <div>
-                <label className="block text-[10px] text-slate-400 uppercase font-bold mb-1">Manzil (Target)</label>
+                <label className="block text-[11px] text-slate-500 font-bold mb-1">Manzil (Target)</label>
                 <select
                   value={pingTargetId}
                   onChange={(e) => setPingTargetId(e.target.value)}
-                  className="w-full bg-[#020617] border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                  className="w-full bg-[#F8FAFC] border border-slate-200 rounded-xl px-3 py-2 text-xs text-[#0F172A] focus:outline-none focus:border-[#545AE8]"
                 >
                   {hostDevices.map((d) => (
                     <option key={d.id} value={d.id}>{d.name} ({d.ip || 'IP yoq'})</option>
@@ -695,32 +690,32 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
             {pingStatus && (
               <div className={`mb-3 px-3 py-2 rounded-xl border flex items-center gap-2 text-xs font-bold ${
                 pingStatus === 'SUCCESS'
-                  ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300'
-                  : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
+                  ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                  : 'bg-rose-50 border-rose-200 text-rose-700'
               }`}>
                 {pingStatus === 'SUCCESS' ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
                 <span>{pingStatus === 'SUCCESS' ? 'Aloqa muvaffaqiyatli o‘rnatildi (0% loss)' : 'Aloqa yo‘q (100% loss)'}</span>
               </div>
             )}
 
-            <div className="bg-[#020617] rounded-2xl p-4 font-mono text-xs text-cyan-300 min-h-44 whitespace-pre-wrap border border-white/10 mb-4">
+            <div className="bg-[#0F172A] rounded-2xl p-4 font-mono text-xs text-slate-100 min-h-44 whitespace-pre-wrap mb-4">
               {pingOutput}
             </div>
 
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowPingModal(false)}
-                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-slate-300 cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-600 cursor-pointer"
               >
                 Yopish
               </button>
               <button
                 onClick={executePing}
                 disabled={isPinging}
-                className="glass-btn-primary px-5 py-2 rounded-xl text-xs font-bold text-white flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                className="bg-[#545AE8] hover:bg-[#4349D6] px-5 py-2 rounded-xl text-xs font-bold text-white flex items-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 <Play className="w-3.5 h-3.5 fill-current" />
-                <span>{isPinging ? 'Yuborilmoqda...' : 'Paket Jo‘natish (Ping)'}</span>
+                <span>{isPinging ? 'Yuborilmoqda...' : 'Paket Jo‘natish'}</span>
               </button>
             </div>
           </div>
@@ -728,22 +723,22 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
       )}
 
       {activeTerminalDevice && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="glass-panel w-full max-w-xl rounded-3xl p-6 border border-white/10 shadow-2xl flex flex-col h-96">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-bold text-white text-sm flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-cyan-400" />
-                <span>{activeTerminalDevice.name} - Virtual Console (CLI)</span>
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-xl rounded-3xl p-6 border border-slate-200 shadow-xl flex flex-col h-96">
+            <div className="flex items-center justify-between mb-3 pb-3 border-b border-slate-100">
+              <h3 className="font-extrabold text-[#0F172A] text-sm flex items-center gap-2">
+                <Terminal className="w-4 h-4 text-[#545AE8]" />
+                <span>{activeTerminalDevice.name} — Virtual Console (CLI)</span>
               </h3>
               <button
                 onClick={() => setActiveTerminalDevice(null)}
-                className="p-1 rounded-lg hover:bg-white/10 text-slate-400 cursor-pointer"
+                className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="flex-1 bg-[#020617] rounded-xl p-3 font-mono text-xs text-cyan-300 overflow-y-auto whitespace-pre-wrap border border-white/10 mb-3">
+            <div className="flex-1 bg-[#0F172A] rounded-xl p-3 font-mono text-xs text-slate-100 overflow-y-auto whitespace-pre-wrap mb-3 custom-scrollbar">
               {cliHistory}
             </div>
 
@@ -787,11 +782,11 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
                 value={cliInput}
                 onChange={(e) => setCliInput(e.target.value)}
                 placeholder="ping 192.168.1.20 yoki ipconfig..."
-                className="flex-1 glass-input rounded-xl px-3 py-2 text-xs font-mono"
+                className="flex-1 bg-[#F8FAFC] border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono text-[#0F172A] focus:outline-none focus:border-[#545AE8]"
               />
               <button
                 type="submit"
-                className="glass-btn-primary px-4 py-2 rounded-xl text-xs font-bold text-white cursor-pointer"
+                className="bg-[#545AE8] hover:bg-[#4349D6] px-4 py-2 rounded-xl text-xs font-bold text-white cursor-pointer"
               >
                 <Send className="w-3.5 h-3.5" />
               </button>
@@ -801,22 +796,22 @@ export default function NetworkLab({ assignment, submissionId, onBack, onComplet
       )}
 
       {showConfirmModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="glass-panel w-full max-w-sm rounded-3xl p-6 border border-white/10 shadow-2xl space-y-4">
-            <h3 className="font-bold text-white text-base">Amaliyotni yakunlaysizmi?</h3>
-            <p className="text-xs text-slate-300 leading-relaxed">
-              Topshiriq yakunlangach, barcha amaliy qadamlaringiz tahlil qilinib ustoz paneliga hisobot yuboriladi.
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-sm rounded-3xl p-6 border border-slate-200 shadow-xl space-y-4">
+            <h3 className="font-extrabold text-[#0F172A] text-base">Amaliyotni yakunlaysizmi?</h3>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Topshiriq yakunlangach, barcha amaliy qadamlaringiz tahlil qilinib o‘qituvchi paneliga hisobot yuboriladi.
             </p>
             <div className="flex justify-end gap-2 pt-2">
               <button
                 onClick={() => setShowConfirmModal(false)}
-                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-slate-300 cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-600 cursor-pointer"
               >
                 Bekor qilish
               </button>
               <button
                 onClick={confirmAndSubmit}
-                className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white cursor-pointer"
+                className="px-5 py-2 rounded-xl bg-[#545AE8] hover:bg-[#4349D6] text-xs font-bold text-white cursor-pointer"
               >
                 Tasdiqlash
               </button>

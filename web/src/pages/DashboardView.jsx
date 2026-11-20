@@ -68,20 +68,24 @@ export default function DashboardView({ user, onSelectStudent, onOpenLab, onOpen
           </div>
         </div>
 
-        <div className="relative z-10 mt-6 md:mt-0">
-          <svg className="w-64 h-44 drop-shadow-lg" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="150" cy="100" r="80" fill="#6970F2" opacity="0.6"/>
-            <rect x="50" y="140" width="200" height="12" rx="4" fill="#3D42C4"/>
-            <rect x="70" y="152" width="10" height="35" rx="3" fill="#2E33A8"/>
-            <rect x="220" y="152" width="10" height="35" rx="3" fill="#2E33A8"/>
-            <rect x="120" y="95" width="60" height="40" rx="4" fill="#0F172A"/>
-            <rect x="125" y="100" width="50" height="30" rx="2" fill="#38BDF8"/>
-            <polygon points="110,138 190,138 185,142 115,142" fill="#CBD5E1"/>
-            <circle cx="85" cy="85" r="14" fill="#FBBF24"/>
-            <path d="M70 135 C70 105, 100 105, 100 135" fill="#F43F5E"/>
-            <circle cx="215" cy="80" r="14" fill="#FBBF24"/>
-            <path d="M200 135 C200 100, 230 100, 230 135" fill="#06B6D4"/>
-          </svg>
+        <div className="relative z-10 mt-6 md:mt-0 bg-white/10 border border-white/15 rounded-2xl p-4 min-w-[220px]">
+          <div className="text-[11px] font-semibold text-white/75 uppercase tracking-wider mb-2">
+            Semestr holati
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <div className="text-2xl font-black text-white">{assignments.length}</div>
+              <div className="text-[11px] text-white/75">Amaliyotlar</div>
+            </div>
+            <div>
+              <div className="text-2xl font-black text-[#FDB528]">
+                {user.role === 'TEACHER' ? pendingCount : submissions.filter((s) => s.status === 'GRADED').length}
+              </div>
+              <div className="text-[11px] text-white/75">
+                {user.role === 'TEACHER' ? 'Kutilmoqda' : 'Baholangan'}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

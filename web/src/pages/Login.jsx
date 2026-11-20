@@ -3,8 +3,8 @@ import { api } from '../api';
 import { ArrowRight, User, Lock, Zap } from 'lucide-react';
 
 export default function Login({ onLoginSuccess }) {
-  const [username, setUsername] = useState('student_024');
-  const [password, setPassword] = useState('student123');
+  const [username, setUsername] = useState('student1');
+  const [password, setPassword] = useState('123');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -97,7 +97,7 @@ export default function Login({ onLoginSuccess }) {
           <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
-              onClick={() => quickLogin('student_024', 'student123')}
+              onClick={() => quickLogin('student1', '123')}
               className="p-2.5 rounded-xl bg-[#F8FAFC] hover:bg-[#EEF2F8] border border-slate-200 text-center cursor-pointer transition-colors"
             >
               <div className="text-xs font-bold text-[#545AE8]">Talaba Aziz</div>
@@ -109,11 +109,11 @@ export default function Login({ onLoginSuccess }) {
               className="p-2.5 rounded-xl bg-[#F8FAFC] hover:bg-[#EEF2F8] border border-slate-200 text-center cursor-pointer transition-colors"
             >
               <div className="text-xs font-bold text-amber-600">Talaba Vali</div>
-              <div className="text-[9px] text-slate-400">Yangi ish</div>
+              <div className="text-[9px] text-slate-400">SE-23</div>
             </button>
             <button
               type="button"
-              onClick={() => quickLogin('teacher_01', 'teacher123')}
+              onClick={() => quickLogin('ustoz', '123')}
               className="p-2.5 rounded-xl bg-[#F8FAFC] hover:bg-[#EEF2F8] border border-slate-200 text-center cursor-pointer transition-colors"
             >
               <div className="text-xs font-bold text-emerald-600">Ustoz</div>

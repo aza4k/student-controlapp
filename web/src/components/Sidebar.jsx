@@ -53,15 +53,15 @@ export default function Sidebar({ activeTab, setActiveTab, user, onLogout }) {
 
       <div className="space-y-4">
         <div className="bg-white rounded-3xl p-4 text-center text-[#1E293B] shadow-lg relative overflow-hidden">
-          <div className="w-12 h-12 mx-auto mb-2 rounded-2xl bg-[#EEF2F8] flex items-center justify-center text-[#545AE8]">
-            <GraduationCap className="w-6 h-6" />
+          <div className="w-11 h-11 mx-auto mb-2 rounded-2xl bg-[#EEF2F8] flex items-center justify-center text-[#545AE8]">
+            <GraduationCap className="w-5 h-5" />
           </div>
-          <h4 className="font-bold text-xs text-[#0F172A]">AI Virtual Lab</h4>
+          <h4 className="font-bold text-xs text-[#0F172A]">Amaliyot Tizimi</h4>
           <p className="text-[11px] text-[#64748B] mt-1 leading-snug">
-            Avtomatik Activity Log va xolis tahlil tizimi
+            Virtual laboratoriya va jarayon nazorati
           </p>
           <div className="mt-3 py-1.5 px-3 bg-[#EEF2F8] rounded-xl text-[10px] font-bold text-[#545AE8]">
-            v2.4 Production
+            HEMIS integratsiya
           </div>
         </div>
 
